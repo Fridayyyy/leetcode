@@ -5,59 +5,125 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <iostream>
 using namespace std;
 
-struct TrieNode{
-    int sid;
-    TrieNode* next[26];
-    TrieNode(){
-        for (int i = 0; i < 26; ++i) {
-            next[i] = nullptr;
+class Node{
+public:
+    Node* trieNode[26] = {nullptr};
+    int isEnd;
+    Node(){
+        isEnd=-1;
+    };
+    ~Node(){
+        for (int i = 0; i < 26; i++)
+        {
+            if (trieNode[i])
+            {
+                /* code */
+                delete trieNode[i];
+            }
+            
         }
+        
+    };
+};
+
+class Trie{
+public:
+    Trie(){
+        root = new Node();
+    };
+    ~Trie(){
+        delete root;
+    };
+    void insert(string & word,int index){
+        Node* p=root;
+        int n=word.size();
+        for (int i = 0; i < n; i++)
+        {
+            /* code */
+            int c=word[i]-'a';
+            if (!p->trieNode[c])
+            {
+                /* code */
+                p->trieNode[c]=new Node();
+            }
+            p=p->trieNode[c];
+            
+        }
+        p->isEnd=index;
+        
+    }
+    void getRes(string &str,vector<vector<int>> &res,int start){
+        Node* p=root;
+        int n=str.size();
+        for (int i = 0; i < n; i++)
+        {
+            /* code */
+            int c=str[i]-'a';
+            if (p->trieNode[c])
+            {
+                /* code */
+                p=p->trieNode[c];
+                if (p->isEnd!=-1)
+                {
+                    /* code */
+                    res[p->isEnd].push_back(start);
+                }
+                
+            }else{
+                return;
+            }
+            
+        }
+        
+    }
+
+private:
+    Node * root;
+};
+
+class Solution {
+public:
+	vector<vector<int>> multiSearch(string big, vector<string>& smalls) {
+        int n=big.size();
+        int m=smalls.size();
+        Trie* trie=new Trie();
+
+        for (int i = 0; i < m; i++)
+        {
+            /* code */
+            trie->insert(smalls[i],i);
+        }
+        vector<vector<int>> res(m);
+        for (int i = 0; i < n; i++)
+        {
+            /* code */
+            string tmpstr = big.substr(i);
+            trie->getRes(tmpstr,res,i);
+        }
+        return res;
     }
 };
 
-class Solution{
-private:
-    TrieNode* root=new TrieNode();
-    void insert(string small_str,int sid){
-        TrieNode* node = root;
-        for (int i = 0; i < small_str.size(); ++i) {
-            int ind=small_str.at(i)-'a';
-            if (node->next[ind]== nullptr)
-                node->next[ind] = new TrieNode();
-            node=node->next[ind];
-        }
-        node->sid=sid;
-    }
-    void search(string big_str,vector<vector<int>>& ans,int bid){
-        TrieNode* node = root;
-        for (int i = 0; i < big_str.size(); ++i) {
-            int ind=big_str.at(i)-'a';
-            if (node->sid!=-1)
-                ans[node->sid].emplace_back(bid);
+class solution{
+    vector<int> kmp(string& text,string&  pattern){
+        int n=pattern.size();
+        int m=text.size();
+        vector<int> next(n,-1);
 
-            if (!node->next[ind])
-                return;
-            node=node->next[ind];
-        }
-        if (node->sid!=-1){
-            ans[node->sid].emplace_back(bid);
-        }
-    }
-public:
-    vector<vector<int>> multiSearch(string big, vector<string>& smalls) {
-        vector<vector<int>> ans(smalls.size(),vector<int>());
-        for (int i = 0; i < smalls.size(); ++i) {
-            if (smalls[i].size()==0){
-                continue;
+        for (int i = 1; i < n; i++)
+        {
+            /* code */
+            int j=next[i-1];
+            while (j!=-1&&pattern[i]!=pattern[j+1])
+            {
+                /* code */
+                j=next[j];
             }
-            insert(smalls[i],i);
+            
         }
-        for (int i = 0; i < big.size(); ++i) {
-            string big_str=big.substr(i,big.size()-i);
-            search(big_str,ans,i);
-        }
-        return ans;
+        
     }
 };
