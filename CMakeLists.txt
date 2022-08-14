@@ -5,5 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(leetcode main.cpp)
 
-add_executable(merger-k-sorted 链表专题/merger-k-sorted.cpp)
-add_executable(002.两数相加 链表专题/002.两数相加.cpp)
+add_executable(017.multiSearch 树专题/017.multiSearch.cpp)
