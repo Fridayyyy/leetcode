@@ -122,8 +122,79 @@ class solution{
                 /* code */
                 j=next[j];
             }
-            
+            if (pattern[i]==pattern[j+1])
+            {
+                /* code */
+                next[i]=j+1;
+            }
         }
+    }
+    vector<int> getNext(string pattern){
+        int n=pattern.length();
+        vector<int> next(n,-1);
+        int j=-1;
+        for (int i = 1; i < n; i++)
+        {
+            /* code */
+            while (j!=-1&&pattern[i]!=pattern[j+1])
+            {
+                /* code */
+                j=next[j];
+
+            }
+            if (pattern[i]==pattern[j+1])
+            {
+                /* code */
+                j++;
+            }
+            next[i]=j;       
+        }
+        return next;
+    }
+    vector<int> multiMatch(string text,string pattern){
+        int m=text.length(),n=pattern.length();
+
+        vector<int> next=getNext(pattern);
+        vector<int> res;
+        int j=-1;
+        for (int i = 0; i < m; i++)
+        {
+            /* code */
+            while (j!=-1&&text[i]!=pattern[j+1])
+            {
+                /* code */
+                j=next[j];
+            }
+            if (text[i]==pattern[j+1])
+            {
+                /* code */
+                j++;
+            }
+            if (j==n-1)
+            {
+                /* code */
+                res.push_back(i-n+1);
+                j=next[j];
+            }
+          
+        }
+        return res;        
+    }
+    vector<vector<int>> multiSearch(string big, vector<string>& smalls){
+        vector<vector<int>> res;
+        int n=smalls.size();
+        for (int i = 0; i < n; i++)
+        {
+            /* code */
+            if (smalls[i]=="")
+            {
+                /* code */
+                res.push_back({});
+                continue;
+            }
+            res.push_back(multiMatch(big,smalls[i]));           
+        }
+        return res;
         
     }
 };
