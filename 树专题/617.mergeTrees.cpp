@@ -12,17 +12,15 @@ struct TreeNode {
 
 class Solution {
 public:
-    int val=0;
-    void postOrder(TreeNode* root){
-        if(!root)
-            return;
-        postOrder(root->right);
-        root->val+=val;
-        val=root->val;
-        postOrder(root->left);
-    }
-    TreeNode* convertBST(TreeNode* root) {
-        postOrder(root);
+    TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
+        if(!root1)
+            return root2;
+        if(!root2)
+            return root1;
+
+        TreeNode* root=new TreeNode(root1->val+root2->val);
+        root->left= mergeTrees(root1->left,root2->left);
+        root->right= mergeTrees(root1->right,root2->right);
         return root;
     }
 };

@@ -12,17 +12,18 @@ struct TreeNode {
 
 class Solution {
 public:
-    int val=0;
-    void postOrder(TreeNode* root){
+    int ans;
+    int depth(TreeNode* root){
         if(!root)
-            return;
-        postOrder(root->right);
-        root->val+=val;
-        val=root->val;
-        postOrder(root->left);
+            return 0;
+        int L=depth(root->left);
+        int R=depth(root->right);
+        ans=max(ans,L+R+1);
+        return max(L,R)+1;
     }
-    TreeNode* convertBST(TreeNode* root) {
-        postOrder(root);
-        return root;
+    int diameterOfBinaryTree(TreeNode* root) {
+        ans=1;
+        depth(root);
+        return ans-1;
     }
 };

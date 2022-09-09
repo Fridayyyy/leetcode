@@ -1,5 +1,5 @@
 //
-// Created by 常贵杰 on 2022/8/27.
+// Created by 常贵杰 on 2022/8/28.
 //
 struct TreeNode {
     int val;
@@ -12,17 +12,17 @@ struct TreeNode {
 
 class Solution {
 public:
-    int val=0;
-    void postOrder(TreeNode* root){
+    TreeNode* helper(TreeNode* root){
         if(!root)
-            return;
-        postOrder(root->right);
-        root->val+=val;
-        val=root->val;
-        postOrder(root->left);
-    }
-    TreeNode* convertBST(TreeNode* root) {
-        postOrder(root);
+            return nullptr;
+        root->left= helper(root->left);
+        root->right= helper(root->right);
+        if((!root->left&&!root->right)&&root->val==0){
+            return nullptr;
+        }
         return root;
+    }
+    TreeNode* pruneTree(TreeNode* root) {
+        helper(root);
     }
 };
