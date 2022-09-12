@@ -1,3 +1,6 @@
+//
+// Created by 86184 on 2022/9/10.
+//
 #include <vector>
 #include <string>
 #include <iostream>
@@ -12,9 +15,7 @@ public:
         dp[0]=nums[0];
         int result=dp[0];
         for (int i = 1; i < nums.size(); ++i) {
-
             dp[i]= max(dp[i-1]+nums[i],nums[i]);
-            cout<<"dp["<<i<<"]:"<<dp[i]<<endl;
             if (dp[i]>result) result=dp[i];
         }
         return result;

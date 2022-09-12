@@ -3,6 +3,4 @@ project(leetcode)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(leetcode main.cpp)
-
-add_executable(017.multiSearch 树专题/017.multiSearch.cpp)
+add_executable(main main.cpp)
