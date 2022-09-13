@@ -1,3 +1,6 @@
+//
+// Created by 86184 on 2022/9/13.
+//
 #include <vector>
 #include <string>
 #include <iostream>
@@ -12,14 +15,8 @@ public:
         vec[1]=1;
         vec[2]=2;
         for (int i = 3; i <= n; ++i) {
-            vec[i]=vec[i-1]+vec[i-2];
+            vec[n]=vec[n-1]+vec[n-2];
         }
         return vec[n];
     }
 };
-int main(){
-    int n;
-    cin>>n;
-    Solution s;
-    cout<<s.climbStairs(n)<<endl;
-}
