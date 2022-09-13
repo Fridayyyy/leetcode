@@ -25,13 +25,22 @@ public:
     int numDecodings1(string s) {
         if (s.empty()||s[0]=='0')
             return 0;
-        int a=0,b=1,c;
-        for (int i = 1; i <=s.size() ; ++i) {
-            c=0;
-            if (s[i-1]!='0'){
-                c+=b;
+        vector<int>cache(s.size()+1,1);
+        for (int i = 1; i < s.size(); ++i) {
+            if (s[i]=='0'){
+                if (s[i-1]=='1'||s[i-1]=='2')
+                    cache[i+1]=cache[i-1];
+                else
+                    return 0;
+            } else{
+                if (s[i-1]=='1'||(s[i-1]=='2'&&s[i]>='1'&&s[i]<='6')){
+                    cache[i+1]=cache[i-1]+cache[i];
+                } else{
+                    cache[i+1]=cache[i];
+                }
             }
         }
+        return cache[s.size()];
     }
 
 };
