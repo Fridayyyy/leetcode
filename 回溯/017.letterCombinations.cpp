@@ -8,12 +8,10 @@ using namespace std;
 
 class Solution {
 public:
-    void backtrack(vector<string>& combinations, const unordered_map<char, string>& phoneMap, const string& digits, int index, string& combination){
-        if (index==digits.len)
-    }
+
     vector<string> letterCombinations(string digits) {
         vector<string> combinations;
-        if (!digits.empty())
+        if (digits.empty())
             return combinations;
         unordered_map<char,string> phoneMap{
                 {'2',"abc"},
@@ -29,6 +27,20 @@ public:
         backtrack(combinations,phoneMap,digits,0,combination);
 
         return combinations;
+    }
+
+        void backtrack(vector<string>& combinations, const unordered_map<char, string>& phoneMap, const string& digits, int index, string& combination){
+        if (index==digits.length()){
+            combinations.push_back(combination);
+        } else{
+            char digit=digits[index];
+            const string &letters=phoneMap.at(digit);
+            for (const char& letter:letters) {
+                combination.push_back(letter);
+                backtrack(combinations,phoneMap,digits,index+1,combination);
+                combination.pop_back();
+            }
+        }
     }
 
 };
